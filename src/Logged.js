@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import PropTypes from "prop-types";
+import Profil from "./Profil";
 
 const axios = require("axios");
 
@@ -22,6 +23,7 @@ class Logged extends Component {
 	render() {
 		return (
 			<View style={styles.container}>
+				<Profil />
 				<TouchableOpacity onPress={this.props.logout}>
 					<Text style={styles.btnLogout}>Logout</Text>
 				</TouchableOpacity>

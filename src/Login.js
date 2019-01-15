@@ -26,7 +26,6 @@ class Login extends Component {
 	}
 
 	login(login, password) {
-		console.log("login..", login, password);
 		const params = {
 			login: login,
 			password: password

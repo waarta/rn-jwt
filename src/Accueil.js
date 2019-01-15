@@ -10,11 +10,7 @@ class Accueil extends Component {
 		this.state = {
 			logged: false,
 			refreshToken: "",
-			jwt: "",
-			value: {
-				login: "user",
-				password: "user"
-			}
+			jwt: ""
 		};
 	}
 
@@ -37,7 +33,7 @@ class Accueil extends Component {
 	render() {
 		console.log("logged : ", this.state.logged);
 		var res = "";
-		if (this.state.jwt != "") {
+		if (this.state.logged) {
 			res = (
 				<View style={styles.container}>
 					<Logged logout={this.logout.bind(this)} />
