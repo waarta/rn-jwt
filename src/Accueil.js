@@ -36,7 +36,7 @@ class Accueil extends Component {
 		if (this.state.logged) {
 			res = (
 				<View style={styles.container}>
-					<Logged logout={this.logout.bind(this)} />
+					<Logged logout={this.logout.bind(this)} jwt={this.state.jwt} />
 				</View>
 			);
 		} else

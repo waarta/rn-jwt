@@ -23,7 +23,7 @@ class Logged extends Component {
 	render() {
 		return (
 			<View style={styles.container}>
-				<Profil />
+				<Profil jwt={this.props.jwt} />
 				<TouchableOpacity onPress={this.props.logout}>
 					<Text style={styles.btnLogout}>Logout</Text>
 				</TouchableOpacity>
@@ -33,7 +33,8 @@ class Logged extends Component {
 }
 
 Logged.propTypes = {
-	logout: PropTypes.func.isRequired
+	logout: PropTypes.func.isRequired,
+	jwt: PropTypes.string.isRequired
 };
 
 const styles = StyleSheet.create({

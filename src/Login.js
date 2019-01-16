@@ -15,9 +15,9 @@ class Login extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			logged: false,
+			/*logged: false,
 			refreshToken: "",
-			jwt: "",
+			jwt: "",*/
 			value: {
 				login: "user",
 				password: "user"
@@ -37,7 +37,7 @@ class Login extends Component {
 				this.props.onError(error);
 			})
 			.then(res => {
-				console.log(res.data);
+				console.log("res_login", res.data);
 				this.props.logged(res.data.refreshToken, res.data.jwt);
 			});
 	}
@@ -49,7 +49,6 @@ class Login extends Component {
 	handleSubmit = () => {
 		var value = this.refs.form.getValue();
 		if (value) {
-			console.log("value: ", value);
 			this.login(value.login, value.password);
 		}
 	};
