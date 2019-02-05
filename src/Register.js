@@ -21,7 +21,7 @@ class Register extends Component {
 	register(name, email, age) {
 		let jwt = this.props.jwt;
 		var payloadObj = KJUR.jws.JWS.readSafeJSONString(
-			KJUR.b64utoutf8(this.props.jwt.split(".")[1])
+			KJUR.b64utoutf8(jwt.split(".")[1])
 		);
 		const params = {
 			id: payloadObj.sub,

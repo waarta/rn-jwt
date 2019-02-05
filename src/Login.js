@@ -34,7 +34,8 @@ class Login extends Component {
 				console.log(error);
 			})
 			.then(res => {
-				this.props.logged(res.data.refreshToken, res.data.jwt);
+				if (res != undefined)
+					this.props.logged(res.data.refreshToken, res.data.jwt);
 			});
 	}
 

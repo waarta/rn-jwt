@@ -23,7 +23,7 @@ class Profil extends Component {
 	getInfos() {
 		let jwt = this.props.jwt;
 		var payloadObj = KJUR.jws.JWS.readSafeJSONString(
-			KJUR.b64utoutf8(this.props.jwt.split(".")[1])
+			KJUR.b64utoutf8(jwt.split(".")[1])
 		);
 		axios({
 			method: "get",
@@ -86,7 +86,30 @@ class Profil extends Component {
 		this.setState({ users: users });
 	}
 
+	getUserRole() {
+		var payloadObj = KJUR.jws.JWS.readSafeJSONString(
+			KJUR.b64utoutf8(this.props.jwt.split(".")[1])
+		);
+		console.log("role", payloadObj.role);
+		return payloadObj.role;
+	}
+
 	render() {
+		var btn = <View />;
+		if (this.getUserRole() == "admin") {
+			btn = (
+				<View>
+					<TouchableOpacity onPress={this.showUsers.bind(this)}>
+						<Text style={styles.btnUsers}>show users</Text>
+					</TouchableOpacity>
+					{this.state.users.map((user, i) => (
+						<Text key={i}>
+							{user.id}: {user.name}, {user.email} ({user.age} ans)
+						</Text>
+					))}
+				</View>
+			);
+		}
 		if (this.state.email == "")
 			return (
 				<Register setInfos={this.setInfos.bind(this)} jwt={this.props.jwt} />
@@ -98,14 +121,7 @@ class Profil extends Component {
 					<Text style={styles.info}>email : {this.state.email}</Text>
 					<Text style={styles.info}>name : {this.state.name}</Text>
 					<Text style={styles.info}>age : {this.state.age}</Text>
-					<TouchableOpacity onPress={this.showUsers.bind(this)}>
-						<Text>show users</Text>
-					</TouchableOpacity>
-					{this.state.users.map((user, i) => (
-						<Text key={i}>
-							{user.id}: {user.name}, {user.email} ({user.age} ans)
-						</Text>
-					))}
+					{btn}
 				</View>
 			);
 	}
@@ -128,6 +144,10 @@ const styles = StyleSheet.create({
 	info: {
 		fontSize: 12,
 		color: "black"
+	},
+	btnUsers: {
+		fontSize: 15,
+		color: "green"
 	}
 });
 
