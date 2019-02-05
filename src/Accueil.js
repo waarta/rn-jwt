@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { StyleSheet, View, Text } from "react-native";
 import Login from "./Login";
 import Logged from "./Logged";
-import PropTypes from "prop-types";
 
 class Accueil extends Component {
 	constructor(props) {
