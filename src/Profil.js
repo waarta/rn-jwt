@@ -12,7 +12,8 @@ class Profil extends Component {
 		this.state = {
 			email: "",
 			name: "",
-			age: ""
+			age: "",
+			users: []
 		};
 	}
 	componentDidMount() {
@@ -39,6 +40,7 @@ class Profil extends Component {
 			.then(
 				function(response) {
 					if (response != undefined) {
+						console.log(response.data);
 						this.setInfos(
 							response.data.age,
 							response.data.email,
@@ -50,12 +52,38 @@ class Profil extends Component {
 	}
 
 	setInfos(age, email, name) {
-		console.log("age", age);
 		this.setState({
 			age: age,
 			email: email,
 			name: name
 		});
+	}
+
+	showUsers() {
+		let jwt = this.props.jwt;
+		axios({
+			method: "get",
+			url: "http://10.31.4.44:3000/api/users/",
+			headers: {
+				Accept: "application/json",
+				"Content-Type": "application/json",
+				Authorization: "Bearer " + jwt
+			}
+		})
+			.catch(function(error) {
+				console.log(error);
+			})
+			.then(
+				function(response) {
+					if (response != undefined) {
+						this.setUsers(response.data);
+					}
+				}.bind(this)
+			);
+	}
+
+	setUsers(users) {
+		this.setState({ users: users });
 	}
 
 	render() {
@@ -70,6 +98,14 @@ class Profil extends Component {
 					<Text style={styles.info}>email : {this.state.email}</Text>
 					<Text style={styles.info}>name : {this.state.name}</Text>
 					<Text style={styles.info}>age : {this.state.age}</Text>
+					<TouchableOpacity onPress={this.showUsers.bind(this)}>
+						<Text>show users</Text>
+					</TouchableOpacity>
+					{this.state.users.map((user, i) => (
+						<Text key={i}>
+							{user.id}: {user.name}, {user.email} ({user.age} ans)
+						</Text>
+					))}
 				</View>
 			);
 	}
