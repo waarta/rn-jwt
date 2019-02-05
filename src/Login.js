@@ -15,9 +15,6 @@ class Login extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			/*logged: false,
-			refreshToken: "",
-			jwt: "",*/
 			value: {
 				login: "user",
 				password: "user"
@@ -34,10 +31,9 @@ class Login extends Component {
 		axios
 			.post("http://10.31.4.44:8000/auth/login", params)
 			.catch(function(error) {
-				this.props.onError(error);
+				console.log(error);
 			})
 			.then(res => {
-				console.log("res_login", res.data);
 				this.props.logged(res.data.refreshToken, res.data.jwt);
 			});
 	}

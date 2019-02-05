@@ -8,16 +8,12 @@ const axios = require("axios");
 class Logged extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {
+		/*this.state = {
 			value: {
 				login: "user",
 				password: "user"
 			}
-		};
-	}
-
-	logout() {
-		console.log("logout");
+		};*/
 	}
 
 	render() {

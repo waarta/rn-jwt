@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import PropTypes from "prop-types";
 import * as KJUR from "jsrsasign";
+import Register from "./Register";
 
 const axios = require("axios");
 
@@ -20,11 +21,9 @@ class Profil extends Component {
 
 	getInfos() {
 		let jwt = this.props.jwt;
-		console.log("jwt", jwt);
 		var payloadObj = KJUR.jws.JWS.readSafeJSONString(
 			KJUR.b64utoutf8(this.props.jwt.split(".")[1])
 		);
-		console.log("payload", payloadObj);
 		axios({
 			method: "get",
 			url: "http://10.31.4.44:3000/api/users/" + payloadObj.sub,
@@ -39,18 +38,19 @@ class Profil extends Component {
 			})
 			.then(
 				function(response) {
-					console.log(response.data);
-					this.setInfos(
-						response.data.age,
-						response.data.email,
-						response.data.name
-					);
+					if (response != undefined) {
+						this.setInfos(
+							response.data.age,
+							response.data.email,
+							response.data.name
+						);
+					}
 				}.bind(this)
 			);
 	}
 
 	setInfos(age, email, name) {
-		console.log("setInfos");
+		console.log("age", age);
 		this.setState({
 			age: age,
 			email: email,
@@ -59,14 +59,19 @@ class Profil extends Component {
 	}
 
 	render() {
-		return (
-			<View style={styles.container}>
-				<Text style={styles.titre}>Profil</Text>
-				<Text style={styles.info}>email : {this.state.email}</Text>
-				<Text style={styles.info}>name : {this.state.name}</Text>
-				<Text style={styles.info}>age : {this.state.name}</Text>
-			</View>
-		);
+		if (this.state.email == "")
+			return (
+				<Register setInfos={this.setInfos.bind(this)} jwt={this.props.jwt} />
+			);
+		else
+			return (
+				<View style={styles.container}>
+					<Text style={styles.titre}>Profil</Text>
+					<Text style={styles.info}>email : {this.state.email}</Text>
+					<Text style={styles.info}>name : {this.state.name}</Text>
+					<Text style={styles.info}>age : {this.state.age}</Text>
+				</View>
+			);
 	}
 }
 
