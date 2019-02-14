@@ -16,6 +16,13 @@ const RegisterUser = t.struct({
 class Register extends Component {
 	constructor(props) {
 		super(props);
+		this.state = {
+			value: {
+				name: "test",
+				email: "test.t@test.fr",
+				age: 30
+			}
+		};
 	}
 
 	register(name, email, age) {
@@ -65,7 +72,7 @@ class Register extends Component {
 	render() {
 		return (
 			<View style={styles.container}>
-				<Form ref="form" type={RegisterUser} />
+				<Form value={this.state.value} ref="form" type={RegisterUser} />
 				<Button title="Register" onPress={this.handleSubmit} />
 			</View>
 		);

@@ -39,10 +39,6 @@ class Login extends Component {
 			});
 	}
 
-	register() {
-		console.log("register");
-	}
-
 	handleSubmit = () => {
 		var value = this.refs.form.getValue();
 		if (value) {
@@ -68,9 +64,7 @@ class Login extends Component {
 				<Button title="Login" onPress={this.handleSubmit} />
 				<View style={styles.register}>
 					<Text>Don't have any anccount ? </Text>
-					<TouchableOpacity onPress={this.register.bind(this)}>
-						<Text>Register here !</Text>
-					</TouchableOpacity>
+						<Text>Register on auth server !</Text>
 				</View>
 			</View>
 		);
