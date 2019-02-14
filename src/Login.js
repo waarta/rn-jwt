@@ -27,15 +27,15 @@ class Login extends Component {
 			login: login,
 			password: password
 		};
-
 		axios
 			.post("http://10.31.4.44:8000/auth/login", params)
 			.catch(function(error) {
 				console.log(error);
 			})
 			.then(res => {
-				if (res != undefined)
+				if (res != undefined) {
 					this.props.logged(res.data.refreshToken, res.data.jwt);
+				}
 			});
 	}
 
@@ -64,7 +64,7 @@ class Login extends Component {
 				<Button title="Login" onPress={this.handleSubmit} />
 				<View style={styles.register}>
 					<Text>Don't have any anccount ? </Text>
-						<Text>Register on auth server !</Text>
+					<Text>Register on auth server !</Text>
 				</View>
 			</View>
 		);
@@ -73,6 +73,7 @@ class Login extends Component {
 
 Login.propTypes = {
 	logged: PropTypes.func.isRequired
+	//refreshToken: PropTypes.func.isRequired
 };
 
 const styles = StyleSheet.create({

@@ -12,6 +12,7 @@
     "prop-types": "^15.6.2",
     "react": "16.6.3",
     "react-native": "0.57.8",
+    "react-native-keychain": "3.0.0",
     "tcomb-form-native": "^0.6.20"
   },
   "devDependencies": {

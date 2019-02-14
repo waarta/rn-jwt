@@ -40,7 +40,6 @@ class Profil extends Component {
 			.then(
 				function(response) {
 					if (response != undefined) {
-						console.log(response.data);
 						this.setInfos(
 							response.data.age,
 							response.data.email,
@@ -82,6 +81,11 @@ class Profil extends Component {
 			);
 	}
 
+	reloadData() {
+		console.log("reload");
+		this.getInfos();
+	}
+
 	setUsers(users) {
 		this.setState({ users: users });
 	}
@@ -90,7 +94,6 @@ class Profil extends Component {
 		var payloadObj = KJUR.jws.JWS.readSafeJSONString(
 			KJUR.b64utoutf8(this.props.jwt.split(".")[1])
 		);
-		console.log("role", payloadObj.role);
 		return payloadObj.role;
 	}
 
@@ -107,6 +110,14 @@ class Profil extends Component {
 							{user.id}: {user.name}, {user.email} ({user.age} ans)
 						</Text>
 					))}
+				</View>
+			);
+		} else if (this.getUserRole() == "user") {
+			btn = (
+				<View>
+					<TouchableOpacity onPress={this.reloadData.bind(this)}>
+						<Text style={styles.btnUsers}>reload Data</Text>
+					</TouchableOpacity>
 				</View>
 			);
 		}
