@@ -4,6 +4,8 @@ import Login from "./Login";
 import Logged from "./Logged";
 import * as Keychain from "react-native-keychain";
 
+const axios = require("axios");
+
 class Accueil extends Component {
 	constructor(props) {
 		super(props);
@@ -12,6 +14,27 @@ class Accueil extends Component {
 			refreshToken: "",
 			jwt: ""
 		};
+	}
+
+	componentDidMount() {
+		this.login();
+	}
+
+	async login() {
+		let refresh = await this.getRefreshToken();
+		const params = {
+			refreshToken: refresh
+		};
+		axios
+			.post("http://10.31.4.44:8000/auth/login", params)
+			.catch(function(error) {
+				console.log(error);
+			})
+			.then(res => {
+				if (res != undefined) {
+					this.logged(res.data.refreshToken, res.data.jwt);
+				}
+			});
 	}
 
 	logged(refreshToken, jwt) {
@@ -33,6 +56,7 @@ class Accueil extends Component {
 	}
 
 	async saveRefreshToken(refreshToken) {
+		console.log("save refreshtoken", refreshToken);
 		await Keychain.setGenericPassword("refreshToken", refreshToken);
 	}
 
@@ -40,10 +64,8 @@ class Accueil extends Component {
 		try {
 			const credentials = await Keychain.getGenericPassword();
 			if (credentials) {
-				this.setState({ refreshToken: credentials.password });
 				return credentials.password;
 			} else {
-				this.setState({ refreshToken: "" });
 				return null;
 			}
 		} catch (error) {
