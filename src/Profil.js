@@ -82,7 +82,6 @@ class Profil extends Component {
 	}
 
 	reloadData() {
-		console.log("reload");
 		this.getInfos();
 	}
 
